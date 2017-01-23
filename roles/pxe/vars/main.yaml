@@ -1,11 +1,10 @@
 workDir: /opt/pxe/
 isofile: onie-recovery-x86_64-kvm_x86_64-r0.iso
 oniefile: onie-updater-x86_64-mlnx_x86-r5_0_1410.1410.bin
-pxelinuxfile: pxelinux.0
 mountDir: /mnt/linux
 tftpdDir: /var/lib/tftpboot
+serverInt: eth0
 serverIP: 192.168.10.1
 dhcpStart: 192.168.10.193
 dhcpEnd: 192.168.10.223
 dhcpBoot: pxelinux.0
-#dhcpBoot: elilo-3.16-x86_64.efi

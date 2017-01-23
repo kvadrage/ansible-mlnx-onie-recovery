@@ -11,9 +11,19 @@ Prerequisites
 Usage
 -------------------
 
-* Install Ubuntu 14
+* Install Ubuntu 16
 * Login as **root**
-* git clone git://github.com/cloneko/ansible-pxe.git
-* cd ansible-mlnx-onie-recovery
-* mv *.iso role/pxe/files && mv *.bin role/pxe/files
-* Run playbook: ansible-playbook pxe.yml
+* **git clone git://github.com/cloneko/ansible-pxe.git**
+* **cd ansible-mlnx-onie-recovery**
+* **mv *.iso roles/pxe/files && mv *.bin role/pxe/files**
+* Edit vars in **roles/pxe/vars/main.yaml**
+* Run playbook: **ansible-playbook pxe.yml**
+* PXE environment for ONIE recovery is up and ready!
+
+After installation
+-------------------
+* connect a switch mgmt0 port to the same VLAN, where PXE server is connected
+* ensure there is no other DHCP servers in this VLAN
+* connect to a switch console and boot it
+* configure network boot in switch BIOS (contact Mellanox for additional instructions)
+* wait the switch to boot into the PXE and recover ONIE partition...

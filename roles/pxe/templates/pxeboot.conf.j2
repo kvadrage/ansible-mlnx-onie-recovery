@@ -1,6 +1,11 @@
-default LINUX
+default ONIE
 
-LABEL LINUX
-	MENU LABEL ONIE Recovery
-    KERNEL /vmlinuz.efi
-    APPEND initrd=/initrd.xz vga=normal boot_env=recovery boot_reason=embed install_url=tftp://{{serverIP}}/{{oniefile}}
+LABEL ONIE
+		MENU LABEL ONIE Recovery
+		KERNEL /vmlinuz
+		APPEND initrd=/initrd.xz panic=10 noexec=off console=ttyS0,115200n8 ramdisk_size=1048576 root=/dev/ram boot_reason=embed boot_env=recovery acpi_enforce_resources=no nmi_watchdog=0 install_url=tftp://{{serverIP}}/{{oniefile}}
+
+#LABEL TEST
+#		MENU TEST
+#		KERNEL /vmlinuz
+#		APPEND initrd=/initrd.xz vga=normal boot_env=recovery boot_reason=embed install_url=tftp://{{serverIP}}/{{oniefile}}
