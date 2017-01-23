@@ -1,0 +1,45 @@
+- name: Install Software
+  apt: name={{item}} state=present
+  with_items:
+    - nfs-kernel-server
+    - tftpd-hpa
+    - syslinux
+    - dnsmasq
+- name: Create pxe directory
+  file: path={{workDir}}/ state=directory mode=0755
+- name: Upload Ubuntu ISO
+  copy: src={{isofile}} dest={{workDir}}/{{isofile}}
+- name: Upload /etc/exports
+  copy: src=exports dest=/etc/exports
+- name: Create mount point
+  file: path={{mountDir}} state=directory
+- name: Create tftpd directory
+  file: path={{tftpdDir}} state=directory
+- name: Create file for Boot(EFI)
+  copy: src=elilo-3.16-x86_64.efi dest={{tftpdDir}}/elilo-3.16-x86_64.efi mode=0644
+- name: Create elilo.conf
+  template: src=elilo.conf.j2 dest={{tftpdDir}}/elilo.conf mode=0644
+- name: Create Directory for Boot
+  file: path={{tftpdDir}}/pxelinux.cfg state=directory
+- name: Create pxeboot Config
+  template: src=pxeboot.conf.j2 dest={{tftpdDir}}/pxelinux.cfg/default mode=0644
+- name: Setup /etc/dnsmasq.conf
+  template: src=dnsmasq.conf.j2 dest=/etc/dnsmasq.conf mode=0600 owner=root group=root
+- name: Mount ISO file
+  mount: name={{mountDir}} src={{workDir}}/{{isofile}} fstype=iso9660 opts=loop,ro state=mounted
+- name: Copy vmlinuz
+  command: creates={{tftpdDir}}/vmlinuz.efi cp -rp {{mountDir}}/vmlinuz {{tftpdDir}}/vmlinuz.efi
+- name: Copy initrd
+  command: creates={{tftpdDir}}/initrd.xz cp -rp {{mountDir}}/initrd.xz {{tftpdDir}}/initrd.xz
+- name: Link Live-boot Loader
+  command: creates={{tftpdDir}}/pxelinux.0 cp {{pxelinuxfile}} {{tftpdDir}}/pxelinux.0
+- name: Copy ONIE update file
+  copy: src={{oniefile}} dest={{tftpdDir}}/{{oniefile}} mode=0644
+- name: Start Services
+  service: name={{item}} enabled=yes state=started
+  with_items:
+    - nfs-kernel-server
+    - tftpd-hpa
+    - dnsmasq
+- name: IP Fowarding
+  sysctl: name=net.ipv4.ip_forward value=1 sysctl_set=yes state=present reload=yes

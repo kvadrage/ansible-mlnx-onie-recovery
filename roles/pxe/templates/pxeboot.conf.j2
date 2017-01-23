@@ -1,0 +1,6 @@
+default LINUX
+
+LABEL LINUX
+	MENU LABEL ONIE Recovery
+    KERNEL /vmlinuz.efi
+    APPEND initrd=/initrd.xz vga=normal boot_env=recovery boot_reason=embed install_url=tftp://{{serverIP}}/{{oniefile}}

@@ -1,0 +1,4 @@
+image=vmlinuz.efi
+label=LINUX
+initrd=initrd.lz
+append="initrd=/initrd.lz vga=normal boot=casper rootfstype=nfs netboot=nfs nfsroot={{ ansible_eth0.ipv4.address }}:{{mountDir}}"

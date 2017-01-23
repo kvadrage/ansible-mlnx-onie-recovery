@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  user: root
+  sudo: yes
+  roles:
+    - pxe
