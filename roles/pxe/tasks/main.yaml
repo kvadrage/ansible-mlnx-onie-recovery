@@ -1,7 +1,6 @@
 - name: Install Software
   apt: name={{item}} state=present
   with_items:
-    - nfs-kernel-server
     - tftpd-hpa
     - syslinux
     - dnsmasq
@@ -28,7 +27,7 @@
 - name: Copy initrd
   command: creates={{tftpdDir}}/initrd.xz cp -rp {{mountDir}}/initrd.xz {{tftpdDir}}/initrd.xz
 - name: Link Live-boot Loader
-  command: creates={{tftpdDir}}/pxelinux.0 cp {{dhcpBoot}} {{tftpdDir}}/pxelinux.0
+  copy: src={{dhcpBoot}} dest={{tftpdDir}}/pxelinux.0 mode=0644
 - name: Copy ONIE update file
   copy: src={{oniefile}} dest={{tftpdDir}}/{{oniefile}} mode=0644
 - name: Start Services

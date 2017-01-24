@@ -16,7 +16,7 @@ Usage
 * Login as **root**
 * **git clone https://github.com/kvadrage/ansible-mlnx-onie-recovery.git**
 * **cd ansible-mlnx-onie-recovery**
-* **mv *.iso roles/pxe/files && mv *.bin role/pxe/files**
+* **mv *.iso roles/pxe/files && mv *.bin roles/pxe/files**
 * Edit vars in **roles/pxe/vars/main.yaml**
 * Run playbook: **ansible-playbook pxe.yml**
 * PXE environment for ONIE recovery is up and ready!
