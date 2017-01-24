@@ -33,7 +33,6 @@
 - name: Start Services
   service: name={{item}} enabled=yes state=started
   with_items:
-    - nfs-kernel-server
     - tftpd-hpa
     - dnsmasq
 - name: IP Fowarding

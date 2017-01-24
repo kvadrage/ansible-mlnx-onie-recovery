@@ -1,7 +1,6 @@
 # ansible-mlnx-onie-recovery
 
 Ansible playbook to deploy a PXE environment for ONIE recovery on Mellanox switches.
-Tested with Mellanox Spectrum switches (SN2100, SN2700, SN2410).
 
 Prerequisites
 -------------------
